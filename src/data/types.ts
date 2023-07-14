@@ -31,3 +31,7 @@ type Ingredient = {
 	recipe: Recipe; // Reference to the Recipe this ingredient belongs to
 	recipeId: string; // ID of the Recipe this ingredient belongs to
 };
+
+export interface RequestWithToken extends Request {
+	userIdFromToken: String;
+}
