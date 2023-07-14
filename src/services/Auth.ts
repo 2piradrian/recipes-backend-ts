@@ -13,10 +13,12 @@ export const AuthService = {
 			throw new Error("User already exists");
 		}
 
+		const hashedPassword = await bycrypt.hash(password, 10);
+
 		const newUser = await prisma.user.create({
 			data: {
 				email,
-				password,
+				password: hashedPassword,
 				name,
 			},
 		});
