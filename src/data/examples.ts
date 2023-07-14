@@ -32,10 +32,10 @@ const recipe = {
 };
 
 const user = {
-	uid: "1234567890",
-	name: "Carlos",
-	surname: "Gonzalez",
+	id: "1234567890",
+	name: "Carlos Perez",
 	email: "carlos@carlos.carlos",
+	password: "123456",
 	recipes: ["12345678888"],
 	favourites: ["12345678888"],
 	categories: ["Panaderia", "Postres"],
