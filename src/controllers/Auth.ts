@@ -22,4 +22,14 @@ export const AuthController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	refreshToken: async (req: Request, res: Response) => {
+		try {
+			const { refreshToken } = req.body;
+
+			const tokens = await AuthService.refreshToken(refreshToken);
+			return res.json(tokens);
+		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 };

@@ -47,4 +47,21 @@ export const AuthService = {
 
 		return { accessToken, refreshToken };
 	},
+	refreshToken: async (refreshToken: string) => {
+		const { userId } = jwt.verify(refreshToken, config!.refreshToken) as any;
+
+		const user = await prisma.user.findUnique({ where: { id: userId } });
+
+		if (!user) {
+			throw new Error("User not found");
+		}
+
+		const accessToken = jwt.sign({ userId: user.id }, config!.accessToken, {
+			expiresIn: "1h",
+		});
+		const newRefreshToken = jwt.sign({ userId: user.id }, config!.refreshToken, {
+			expiresIn: "7d",
+		});
+		return { accessToken, refreshToken: newRefreshToken };
+	},
 };

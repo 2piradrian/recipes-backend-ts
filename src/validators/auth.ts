@@ -61,4 +61,12 @@ export const AuthValidator = {
 		}
 		next();
 	},
+	refreshToken(req: Request, res: Response, next: NextFunction) {
+		const { refreshToken } = req.body;
+
+		if (!refreshToken) {
+			return res.status(400).json({ message: "Refresh token is required" });
+		}
+		next();
+	},
 };
