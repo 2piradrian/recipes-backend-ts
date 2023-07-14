@@ -6,8 +6,8 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export const AuthService = {
-	register: async (email: string, password: string, name: string) => {
-		const existingUser = await prisma.users.findUnique({ where: { email } });
+	register: async (email: string, password: string, name: string, image: number) => {
+		const existingUser = await prisma.user.findUnique({ where: { email } });
 
 		if (existingUser) {
 			throw new Error("User already exists");
@@ -20,6 +20,7 @@ export const AuthService = {
 				email,
 				password: hashedPassword,
 				name,
+				image,
 			},
 		});
 
@@ -38,17 +39,17 @@ export const AuthService = {
 			throw new Error("Invalid password");
 		}
 
-		const accessToken = jwt.sign({ userId: user.id }, config!.accessToken, {
+		const accessToken = jwt.sign({ userId: user.id }, config()!.accessToken, {
 			expiresIn: "1h",
 		});
-		const refreshToken = jwt.sign({ userId: user.id }, config!.refreshToken, {
+		const refreshToken = jwt.sign({ userId: user.id }, config()!.refreshToken, {
 			expiresIn: "7d",
 		});
 
 		return { accessToken, refreshToken };
 	},
 	refreshToken: async (refreshToken: string) => {
-		const { userId } = jwt.verify(refreshToken, config!.refreshToken) as any;
+		const { userId } = jwt.verify(refreshToken, config()!.refreshToken) as any;
 
 		const user = await prisma.user.findUnique({ where: { id: userId } });
 
@@ -56,10 +57,10 @@ export const AuthService = {
 			throw new Error("User not found");
 		}
 
-		const accessToken = jwt.sign({ userId: user.id }, config!.accessToken, {
+		const accessToken = jwt.sign({ userId: user.id }, config()!.accessToken, {
 			expiresIn: "1h",
 		});
-		const newRefreshToken = jwt.sign({ userId: user.id }, config!.refreshToken, {
+		const newRefreshToken = jwt.sign({ userId: user.id }, config()!.refreshToken, {
 			expiresIn: "7d",
 		});
 		return { accessToken, refreshToken: newRefreshToken };

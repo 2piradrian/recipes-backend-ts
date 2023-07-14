@@ -10,13 +10,12 @@ datasource db {
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique
-  password   String
-  name       String
-  surname    String
-  image      Int      // From 1 to 7
-  categories String[] // Those are categories what user like
-  favourites String[] // Those are recipes what user like
-  recipes    Recipe[] // That's a ID array of recipes what user have created
+  password   String   @default("")
+  name       String   @default("")
+  image      Int                              // From 1 to 7
+  categories String[] @default([])            // Those are categories what user like
+  favourites String[] @default([])            // Those are recipes what user like
+  recipes    Recipe[]                         // That's a ID array of recipes what user have created
   
 }
 

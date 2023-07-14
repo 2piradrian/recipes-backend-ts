@@ -2,7 +2,7 @@ const getAcessToken = (): string => {
 	if (process.env.ACCESS_TOKEN) {
 		return process.env.ACCESS_TOKEN;
 	}
-	throw new Error("ACCES TOKEN SECRET NOT PRESENT");
+	throw new Error("ACCESS TOKEN SECRET NOT PRESENT");
 };
 const getRefreshToken = () => {
 	if (process.env.REFRESH_TOKEN) {
@@ -17,8 +17,10 @@ const getPort = () => {
 	throw new Error("PORT NOT PRESENT");
 };
 
-export const config = {
-	accessToken: getAcessToken(),
-	refreshToken: getRefreshToken(),
-	port: getPort(),
+export const config = () => {
+	return {
+		accessToken: getAcessToken(),
+		refreshToken: getRefreshToken(),
+		port: getPort(),
+	};
 };

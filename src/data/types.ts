@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 type User = {
 	id: string;
 	email: string;

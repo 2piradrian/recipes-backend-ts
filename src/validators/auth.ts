@@ -5,7 +5,7 @@ import { config } from "../data/config";
 
 export const AuthValidator = {
 	checkToken: (req: RequestWithToken, res: Response, next: NextFunction) => {
-		const header = req.headers["authorization"];
+		const header = req.headers.authorization;
 
 		if (!header) {
 			return res.status(401).json({ message: "Authorization header not found" });
@@ -18,7 +18,7 @@ export const AuthValidator = {
 		}
 
 		try {
-			const data = jwt.verify(token, config!.accessToken);
+			const data = jwt.verify(token, config()!.accessToken);
 
 			if (data) {
 				req.userIdFromToken = (data as any).userId;
@@ -31,9 +31,9 @@ export const AuthValidator = {
 		}
 	},
 	register(req: Request, res: Response, next: NextFunction) {
-		const { name, email, password } = req.body;
+		const { name, email, password, image } = req.body;
 
-		if (!name || !email || !password) {
+		if (!name || !email || !password || !image) {
 			return res.status(400).json({ message: "All fields are required" });
 		}
 		if (password.length < 6) {
@@ -44,6 +44,9 @@ export const AuthValidator = {
 		}
 		if (name.length < 3) {
 			return res.status(400).json({ message: "Name must be at least 3 characters" });
+		}
+		if (image < 0 || image > 7) {
+			return res.status(400).json({ message: "Invalid image" });
 		}
 		next();
 	},

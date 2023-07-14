@@ -3,3 +3,5 @@ Hay que unificar el nombre y dejar de separarlo en nombre y apellido
 Hay que verficar que las validaciones de formularios del frontend coincidan con las del backend
 
 Hay que eliminar los comentarios
+
+Ver cual es el rango de imagenes aceptadas
