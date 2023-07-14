@@ -1,8 +1,7 @@
-import { RequestWithToken } from "./../data/types";
-import { Response, NextFunction } from "express";
+import { RequestWithToken } from "../data/types";
+import { Response, NextFunction, Request } from "express";
 import jwt from "jsonwebtoken";
-
-const accessTokenSecret = process.env.access_token_secret ?? "";
+import { config } from "../data/config";
 
 export const AuthValidator = {
 	checkToken: (req: RequestWithToken, res: Response, next: NextFunction) => {
@@ -19,7 +18,7 @@ export const AuthValidator = {
 		}
 
 		try {
-			const data = jwt.verify(token, accessTokenSecret);
+			const data = jwt.verify(token, config!.accessToken);
 
 			if (data) {
 				req.userIdFromToken = (data as any).userId;
@@ -30,5 +29,36 @@ export const AuthValidator = {
 		} catch (error) {
 			return res.status(401).json({ message: "Invalid token" });
 		}
+	},
+	register(req: Request, res: Response, next: NextFunction) {
+		const { name, email, password } = req.body;
+
+		if (!name || !email || !password) {
+			return res.status(400).json({ message: "All fields are required" });
+		}
+		if (password.length < 6) {
+			return res.status(400).json({ message: "Password must be at least 6 characters" });
+		}
+		if (!email.includes("@") || !email.includes(".")) {
+			return res.status(400).json({ message: "Invalid email" });
+		}
+		if (name.length < 3) {
+			return res.status(400).json({ message: "Name must be at least 3 characters" });
+		}
+		next();
+	},
+	login(req: Request, res: Response, next: NextFunction) {
+		const { email, password } = req.body;
+
+		if (!email || !password) {
+			return res.status(400).json({ message: "All fields are required" });
+		}
+		if (password.length < 6) {
+			return res.status(400).json({ message: "Password must be at least 6 characters" });
+		}
+		if (!email.includes("@") || !email.includes(".")) {
+			return res.status(400).json({ message: "Invalid email" });
+		}
+		next();
 	},
 };
