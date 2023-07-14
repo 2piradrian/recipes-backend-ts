@@ -3,7 +3,6 @@ type User = {
 	email: string;
 	password: string;
 	name: string;
-	surname: string;
 	image: number;
 	categories: string[];
 	favourites: string[];
