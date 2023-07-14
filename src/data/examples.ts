@@ -1,27 +1,26 @@
 const recipe = {
-	id: "12345678888",
+	uid: "12345678888",
 	authorname: "Carlitos",
 	authorphoto: 1,
 	authoruid: "1234567890",
 	category: "Panaderia",
-	comments: ["", ""],
 	description: "Receta de pan",
 	image: "https://...",
 	ingredients: [
 		{
-			cant: "10",
+			cant: "1",
+			unit: "kg",
 			name: "harina",
-			unit: "gr",
 		},
 		{
 			cant: "10",
-			name: "agua",
 			unit: "ml",
+			name: "agua",
 		},
 		{
 			cant: "10",
-			name: "levadura",
 			unit: "gr",
+			name: "levadura",
 		},
 	],
 	steps: [
