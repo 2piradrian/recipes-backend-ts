@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "./data/config";
 import { AuthRouter } from "./routes/Auth";
 import { RecipeRouter } from "./routes/Recipe";
+import { UserRouter } from "./routes/User";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", AuthRouter);
 app.use("/recipes", RecipeRouter);
+app.use("/user", UserRouter);
 
 /* backend in port 3333 */
 app.listen(3333, () => {

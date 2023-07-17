@@ -1,9 +1,9 @@
 import { Request } from "express";
 
-type User = {
+export type User = {
 	id: string;
 	email: string;
-	password: string;
+	password?: string;
 	name: string;
 	image: number;
 	categories: string[];
@@ -11,7 +11,7 @@ type User = {
 	recipes: string[]; // Array of recipe IDs
 };
 
-type Recipe = {
+export type Recipe = {
 	id: string;
 	name: string;
 	category: string;
@@ -24,7 +24,7 @@ type Recipe = {
 	authorId: string; // ID of the User who owns the recipe
 };
 
-type Ingredient = {
+export type Ingredient = {
 	id: string;
 	cant: string;
 	name: string;

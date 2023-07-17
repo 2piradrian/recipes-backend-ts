@@ -6,7 +6,7 @@ export const AuthController = {
 		try {
 			const { email, password, name, image } = req.body;
 
-			const user = await AuthService.register(name, email, password, image);
+			const user = await AuthService.register(email, password, name, image);
 			return res.json(user);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });
@@ -16,8 +16,8 @@ export const AuthController = {
 		try {
 			const { email, password } = req.body;
 
-			const tokens = await AuthService.login(email, password);
-			return res.json(tokens);
+			const userData = await AuthService.login(email, password);
+			return res.json(userData);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });
 		}

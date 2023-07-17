@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { config } from "../data/config";
 
 export const AuthValidator = {
-	checkToken: (req: RequestWithToken, res: Response, next: NextFunction) => {
+	checkToken: (req: Request, res: Response, next: NextFunction) => {
 		const header = req.headers.authorization;
 
 		if (!header) {
@@ -21,7 +21,7 @@ export const AuthValidator = {
 			const data = jwt.verify(token, config()!.accessToken);
 
 			if (data) {
-				req.userIdFromToken = (data as any).userId;
+				(req as RequestWithToken).userIdFromToken = (data as any).userId;
 				return next();
 			}
 
@@ -45,7 +45,7 @@ export const AuthValidator = {
 		if (name.length < 3) {
 			return res.status(400).json({ message: "Name must be at least 3 characters" });
 		}
-		if (image < 0 || image > 7) {
+		if (image < 0 || image > 10) {
 			return res.status(400).json({ message: "Invalid image" });
 		}
 		next();

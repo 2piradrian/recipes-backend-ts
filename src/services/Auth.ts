@@ -17,10 +17,10 @@ export const AuthService = {
 
 		const newUser = await prisma.user.create({
 			data: {
-				email,
+				email: email.toLowerCase(),
 				password: hashedPassword,
-				name,
-				image,
+				name: name,
+				image: image,
 			},
 		});
 
@@ -28,7 +28,6 @@ export const AuthService = {
 	},
 	login: async (email: string, password: string) => {
 		const user = await prisma.user.findUnique({ where: { email } });
-
 		if (!user) {
 			throw new Error("User not found");
 		}
@@ -46,7 +45,7 @@ export const AuthService = {
 			expiresIn: "7d",
 		});
 
-		return { accessToken, refreshToken };
+		return { user, tokens: { accessToken, refreshToken } };
 	},
 	refreshToken: async (refreshToken: string) => {
 		const { userId } = jwt.verify(refreshToken, config()!.refreshToken) as any;
