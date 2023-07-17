@@ -5,16 +5,11 @@ import { AuthValidator } from "../validators/Auth";
 
 export const UserRouter = Router();
 
+UserRouter.get("/:id", AuthValidator.checkToken, UserValidator.getById, UserController.getById);
 UserRouter.get(
-	"/user/:id",
-	AuthValidator.checkToken,
-	UserValidator.getById,
-	UserController.getById
-);
-UserRouter.get(
-	"/user/email/:email",
+	"/email/:email",
 	AuthValidator.checkToken,
 	UserValidator.getByEmail,
 	UserController.getByEmail
 );
-UserRouter.get("/user", AuthValidator.checkToken, UserController.getByToken);
+UserRouter.post("/", AuthValidator.checkToken, UserController.getByToken);

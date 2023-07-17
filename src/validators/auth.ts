@@ -6,7 +6,6 @@ import { config } from "../data/config";
 export const AuthValidator = {
 	checkToken: (req: Request, res: Response, next: NextFunction) => {
 		const header = req.headers.authorization;
-
 		if (!header) {
 			return res.status(401).json({ message: "Authorization header not found" });
 		}
