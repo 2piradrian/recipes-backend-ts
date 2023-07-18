@@ -5,3 +5,28 @@ Hay que verficar que las validaciones de formularios del frontend coincidan con 
 Hay que eliminar los comentarios
 
 Ver cual es el rango de imagenes aceptadas
+
+
+
+model Recipe {
+  uid         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  category    String
+  time        String
+  description String
+  ingredients Ingredient[] @relation(fields: [ingredientsIds], references: [uid])
+  ingredientsIds String[] @db.ObjectId
+  steps       String[] // That's a JSON
+  image       String // That's a URL
+  // Recipe Owner 
+
+}
+
+model Ingredient {
+  uid       String  @id @default(auto()) @map("_id") @db.ObjectId
+  cant      String
+  name      String
+  unit      String
+  Recipe    Recipe[] @relation(fields: [recipeId], references: [uid])
+  recipeId String[] @db.ObjectId
+}
