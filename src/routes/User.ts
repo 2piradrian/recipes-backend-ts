@@ -13,3 +13,4 @@ UserRouter.get(
 	UserController.getByEmail
 );
 UserRouter.post("/", AuthValidator.checkToken, UserController.getByToken);
+UserRouter.put("/", AuthValidator.checkToken, UserValidator.update, UserController.update);

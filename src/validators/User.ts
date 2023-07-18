@@ -15,4 +15,17 @@ export const UserValidator = {
 		}
 		next();
 	},
+	update: (req: Request, res: Response, next: NextFunction) => {
+		const { categories, favourites, recipes } = req.body;
+		if (!categories) {
+			return res.status(400).json({ message: "Categories is required" });
+		}
+		if (!favourites) {
+			return res.status(400).json({ message: "Favourites is required" });
+		}
+		if (!recipes) {
+			return res.status(400).json({ message: "Recipes is required" });
+		}
+		next();
+	},
 };

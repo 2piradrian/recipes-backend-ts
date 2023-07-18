@@ -25,4 +25,19 @@ export const UserService = {
 		});
 		return user;
 	},
+	update: async (id: string, categories: string[], favourites: string[], recipes: string[]) => {
+		const user = await prisma.user.update({
+			where: {
+				id,
+			},
+			data: {
+				categories: categories,
+				favourites: favourites,
+				recipes: {
+					connect: recipes.map((recipeId) => ({ id: recipeId })),
+				},
+			},
+		});
+		return user;
+	},
 };

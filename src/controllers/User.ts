@@ -39,4 +39,15 @@ export const UserController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	update: async (req: Request, res: Response) => {
+		const { categories, favourites, recipes } = req.body;
+		const { userIdFromToken } = req as any;
+
+		try {
+			const user = await UserService.update(userIdFromToken, categories, favourites, recipes);
+			return res.json(user);
+		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 };
