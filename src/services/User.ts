@@ -37,6 +37,9 @@ export const UserService = {
 					connect: recipes.map((recipeId) => ({ id: recipeId })),
 				},
 			},
+			include: {
+				recipes: true,
+			},
 		});
 		return user;
 	},

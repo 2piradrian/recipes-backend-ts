@@ -1,3 +1,4 @@
+import { UserService } from "./User";
 import { PrismaClient } from "@prisma/client";
 import bycrypt from "bcrypt";
 import { config } from "../data/config";
@@ -7,7 +8,7 @@ const prisma = new PrismaClient();
 
 export const AuthService = {
 	register: async (email: string, password: string, name: string, image: number) => {
-		const existingUser = await prisma.user.findUnique({ where: { email } });
+		const existingUser = await UserService.getByEmail(email.toLowerCase());
 
 		if (existingUser) {
 			throw new Error("User already exists");
@@ -22,12 +23,15 @@ export const AuthService = {
 				name: name,
 				image: image,
 			},
+			include: {
+				recipes: true,
+			},
 		});
 
 		return newUser;
 	},
 	login: async (email: string, password: string) => {
-		const user = await prisma.user.findUnique({ where: { email } });
+		const user = await UserService.getByEmail(email.toLowerCase());
 		if (!user) {
 			throw new Error("User not found");
 		}

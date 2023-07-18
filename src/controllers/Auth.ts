@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/Auth";
+import { User } from "../data/types";
 
 export const AuthController = {
 	register: async (req: Request, res: Response) => {
@@ -7,6 +8,9 @@ export const AuthController = {
 			const { email, password, name, image } = req.body;
 
 			const user = await AuthService.register(email, password, name, image);
+
+			delete (user as unknown as User).password;
+
 			return res.json(user);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });
@@ -16,8 +20,11 @@ export const AuthController = {
 		try {
 			const { email, password } = req.body;
 
-			const userData = await AuthService.login(email, password);
-			return res.json(userData);
+			const response = await AuthService.login(email, password);
+
+			delete (response.user as unknown as User).password;
+
+			return res.json(response);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -27,6 +34,7 @@ export const AuthController = {
 			const { refreshToken } = req.body;
 
 			const tokens = await AuthService.refreshToken(refreshToken);
+
 			return res.json(tokens);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });

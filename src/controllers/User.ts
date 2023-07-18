@@ -45,6 +45,9 @@ export const UserController = {
 
 		try {
 			const user = await UserService.update(userIdFromToken, categories, favourites, recipes);
+			if (user) {
+				delete (user as unknown as User).password;
+			}
 			return res.json(user);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });
