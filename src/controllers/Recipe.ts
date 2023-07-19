@@ -51,17 +51,20 @@ export const RecipeController = {
 
 			const likedRecipes: Recipe[] = [];
 
-			user.favourites.map(async (recipe) => {
-				const likedRecipe = await RecipeService.getById(recipe);
-				likedRecipes.push(likedRecipe as Recipe);
-			});
+			// Utilizar Promise.all para esperar a que se resuelvan todas las promesas
+			await Promise.all(
+				user.favourites.map(async (recipe) => {
+					const likedRecipe = await RecipeService.getById(recipe);
+					likedRecipes.push(likedRecipe as any);
+				})
+			);
 
 			return res.json({ likedRecipes });
 		} catch (error: any) {
-			console.log(error);
 			return res.status(500).json({ error: error.message });
 		}
 	},
+
 	create: async (req: Request, res: Response) => {
 		try {
 			const { name, category, time, description, ingredients, steps, image, authorId } =
