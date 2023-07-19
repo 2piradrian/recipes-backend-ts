@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Recipe } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +25,7 @@ export const UserService = {
 		});
 		return user;
 	},
-	update: async (id: string, categories: string[], favourites: string[], recipes: string[]) => {
+	update: async (id: string, categories: string[], favourites: string[], recipes: Recipe[]) => {
 		const user = await prisma.user.update({
 			where: {
 				id,
@@ -34,7 +34,7 @@ export const UserService = {
 				categories: categories,
 				favourites: favourites,
 				recipes: {
-					connect: recipes.map((recipeId) => ({ id: recipeId })),
+					connect: recipes.map((recipe) => ({ id: recipe.id })),
 				},
 			},
 			include: {

@@ -34,5 +34,5 @@ export type Ingredient = {
 };
 
 export interface RequestWithToken extends Request {
-	userIdFromToken: String;
+	userIdFromToken: string;
 }

@@ -1,4 +1,4 @@
-import { User } from "../data/types";
+import { RequestWithToken, User } from "../data/types";
 import { Request, Response } from "express";
 import { UserService } from "../services/User";
 
@@ -41,7 +41,8 @@ export const UserController = {
 	},
 	update: async (req: Request, res: Response) => {
 		const { categories, favourites, recipes } = req.body;
-		const { userIdFromToken } = req as any;
+
+		const { userIdFromToken } = req as RequestWithToken;
 
 		try {
 			const user = await UserService.update(userIdFromToken, categories, favourites, recipes);
