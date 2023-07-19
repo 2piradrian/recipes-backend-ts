@@ -29,7 +29,7 @@ export const UserController = {
 	},
 	getByToken: async (req: Request, res: Response) => {
 		try {
-			const { userIdFromToken } = req as any;
+			const { userIdFromToken } = req as RequestWithToken;
 			const user = await UserService.getById(userIdFromToken);
 			if (user) {
 				delete (user as unknown as User).password;

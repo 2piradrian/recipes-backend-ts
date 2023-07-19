@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { RecipeService } from "../services/Recipe";
+import { Recipe, RequestWithToken } from "../data/types";
+import { UserService } from "../services/User";
 
 export const RecipeController = {
 	getAll: async (req: Request, res: Response) => {
@@ -34,6 +36,29 @@ export const RecipeController = {
 			const recipes = await RecipeService.getUserRecipes(id);
 			return res.json(recipes);
 		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+	getLiked: async (req: Request, res: Response) => {
+		try {
+			const { userIdFromToken } = req as RequestWithToken;
+
+			const user = await UserService.getById(userIdFromToken);
+
+			if (!user) {
+				return res.status(404).json({ error: "User not found" });
+			}
+
+			const likedRecipes: Recipe[] = [];
+
+			user.favourites.map(async (recipe) => {
+				const likedRecipe = await RecipeService.getById(recipe);
+				likedRecipes.push(likedRecipe as Recipe);
+			});
+
+			return res.json({ likedRecipes });
+		} catch (error: any) {
+			console.log(error);
 			return res.status(500).json({ error: error.message });
 		}
 	},

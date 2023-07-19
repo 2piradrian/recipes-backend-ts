@@ -16,7 +16,6 @@ model User {
   categories String[] @default([])            // Those are categories what user like
   favourites String[] @default([])            // Those are recipes what user like
   recipes    Recipe[]                         // That's a ID array of recipes what user have created
-  
 }
 
 model Recipe {

@@ -1,3 +1,4 @@
+import { AuthValidator } from "./../validators/Auth";
 import { RecipeValidator } from "../validators/Recipe";
 import { RecipeController } from "./../controllers/Recipe";
 import { Router } from "express";
@@ -10,3 +11,4 @@ RecipeRouter.get("/page", RecipeController.getPage);
 RecipeRouter.post("/", RecipeValidator.create, RecipeController.create);
 RecipeRouter.put("/:id", RecipeController.update);
 RecipeRouter.get("/user-recipes/:id", RecipeController.getUserRecipes);
+RecipeRouter.post("/liked", AuthValidator.checkToken, RecipeController.getLiked);
