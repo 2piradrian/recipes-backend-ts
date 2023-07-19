@@ -32,6 +32,9 @@ export const RecipeController = {
 		try {
 			const { name, category, time, description, ingredients, steps, image, authorId } =
 				req.body;
+
+			console.log(req.body); /////////////////////////
+
 			const newRecipe = await RecipeService.create(
 				name,
 				category,
