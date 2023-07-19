@@ -64,7 +64,30 @@ export const RecipeController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	getLatest: async (req: Request, res: Response) => {
+		try {
+			const latestRecipes = await RecipeService.getLatest();
+			return res.json(latestRecipes);
+		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+	getRecommended: async (req: Request, res: Response) => {
+		const { userIdFromToken } = req as RequestWithToken;
 
+		const user = await UserService.getById(userIdFromToken);
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		try {
+			const recommendedRecipes = await RecipeService.getRecommended(user.categories);
+			return res.json(recommendedRecipes);
+		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 	create: async (req: Request, res: Response) => {
 		try {
 			const { name, category, time, description, ingredients, steps, image, authorId } =

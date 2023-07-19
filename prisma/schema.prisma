@@ -12,10 +12,10 @@ model User {
   email      String   @unique
   password   String   @default("")
   name       String   @default("")
-  image      Int                              // From 1 to 7
-  categories String[] @default([])            // Those are categories what user like
-  favourites String[] @default([])            // Those are recipes what user like
-  recipes    Recipe[]                         // That's a ID array of recipes what user have created
+  image      Int // From 1 to 7
+  categories String[] @default([]) // Those are categories what user like
+  favourites String[] @default([]) // Those are recipes what user like
+  recipes    Recipe[] // That's a ID array of recipes what user have created
 }
 
 model Recipe {
@@ -25,18 +25,19 @@ model Recipe {
   time        String
   description String
   ingredients Ingredient[] // Ingrendients used in this recipe
-  steps       String[]     // Steps to do this recipe
-  image       String       // That's a URL
+  steps       String[] // Steps to do this recipe
+  image       String // That's a URL
+  createdAt   DateTime     @default(now())
   // <-- Recipe Owner --> //
   author      User         @relation(fields: [authorId], references: [id])
   authorId    String       @db.ObjectId
 }
 
 model Ingredient {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  cant      String
-  name      String
-  unit      String
-  Recipe    Recipe @relation(fields: [recipeId], references: [id])
-  recipeId  String @db.ObjectId
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  cant     String
+  name     String
+  unit     String
+  Recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId String @db.ObjectId
 }

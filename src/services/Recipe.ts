@@ -56,6 +56,36 @@ export const RecipeService = {
 		});
 		return recipes;
 	},
+	getLatest: async () => {
+		const latestRecipes = await prisma.recipe.findMany({
+			orderBy: [
+				{
+					createdAt: "desc",
+				},
+			],
+			take: 3,
+			include: {
+				ingredients: true,
+				author: true,
+			},
+		});
+
+		return latestRecipes;
+	},
+	getRecommended: async (categories: string[]) => {
+		const recommendedRecipes = await prisma.recipe.findMany({
+			where: {
+				category: { in: categories },
+			},
+			orderBy: [
+				{
+					createdAt: "desc",
+				},
+			],
+			take: 3,
+		});
+		return recommendedRecipes;
+	},
 	create: async (
 		name: string,
 		category: string,
