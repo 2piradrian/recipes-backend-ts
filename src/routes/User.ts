@@ -1,3 +1,4 @@
+import { User } from "./../data/types";
 import { UserValidator } from "./../validators/User";
 import { Router } from "express";
 import { UserController } from "../controllers/User";

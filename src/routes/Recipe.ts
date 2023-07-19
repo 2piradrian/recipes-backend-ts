@@ -9,3 +9,4 @@ RecipeRouter.get("/:id", RecipeController.getById);
 RecipeRouter.get("/page", RecipeController.getPage);
 RecipeRouter.post("/", RecipeValidator.create, RecipeController.create);
 RecipeRouter.put("/:id", RecipeController.update);
+RecipeRouter.get("/user-recipes/:id", RecipeController.getUserRecipes);

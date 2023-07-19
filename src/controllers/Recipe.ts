@@ -28,12 +28,19 @@ export const RecipeController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	getUserRecipes: async (req: Request, res: Response) => {
+		try {
+			const { id } = req.params;
+			const recipes = await RecipeService.getUserRecipes(id);
+			return res.json(recipes);
+		} catch (error: any) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 	create: async (req: Request, res: Response) => {
 		try {
 			const { name, category, time, description, ingredients, steps, image, authorId } =
 				req.body;
-
-			console.log(req.body); /////////////////////////
 
 			const newRecipe = await RecipeService.create(
 				name,

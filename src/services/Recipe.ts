@@ -7,6 +7,14 @@ export const RecipeService = {
 		const recipes = await prisma.recipe.findMany({
 			include: {
 				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
 			},
 		});
 		return recipes;
@@ -18,6 +26,14 @@ export const RecipeService = {
 			},
 			include: {
 				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
 			},
 		});
 		return recipe;
@@ -28,6 +44,14 @@ export const RecipeService = {
 			take: pageSize,
 			include: {
 				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
 			},
 		});
 		return recipes;
@@ -87,5 +111,24 @@ export const RecipeService = {
 			},
 		});
 		return updatedRecipe;
+	},
+	getUserRecipes: async (authorId: string) => {
+		const recipes = await prisma.recipe.findMany({
+			where: {
+				authorId,
+			},
+			include: {
+				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
+			},
+		});
+		return recipes;
 	},
 };

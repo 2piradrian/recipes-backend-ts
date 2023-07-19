@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express";
 export const RecipeValidator = {
 	create: (req: Request, res: Response, next: NextFunction) => {
 		const { name, category, time, description, ingredients, steps, image, authorId } = req.body;
-		console.log(req.body); /////////////////////////
 		if (
 			!name ||
 			!category ||
