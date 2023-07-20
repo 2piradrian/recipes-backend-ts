@@ -120,9 +120,12 @@ export const RecipeService = {
 		description: string,
 		ingredients: Ingredient[],
 		steps: string[],
-		image: string,
-		authorId: string
+		image: string
 	) => {
+		await prisma.ingredient.deleteMany({
+			where: { recipeId: id },
+		});
+
 		const updatedRecipe = await prisma.recipe.update({
 			where: {
 				id,
@@ -133,12 +136,12 @@ export const RecipeService = {
 				time,
 				description,
 				ingredients: {
-					set: ingredients,
+					create: ingredients,
 				},
 				steps,
 				image,
-				authorId,
 			},
+			include: { ingredients: true },
 		});
 		return updatedRecipe;
 	},

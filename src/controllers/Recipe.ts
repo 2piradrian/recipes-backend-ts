@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { RecipeService } from "../services/Recipe";
 import { Recipe, RequestWithToken } from "../data/types";
 import { UserService } from "../services/User";
+import { Ingredient } from "@prisma/client";
 
 export const RecipeController = {
 	getAll: async (req: Request, res: Response) => {
@@ -111,8 +112,26 @@ export const RecipeController = {
 	update: async (req: Request, res: Response) => {
 		try {
 			const { id } = req.params;
-			const { name, category, time, description, ingredients, steps, image, authorId } =
-				req.body;
+			const { name, category, time, description, ingredients, steps, image } = req.body;
+
+			const { userIdFromToken } = req as RequestWithToken;
+
+			const user = await UserService.getById(userIdFromToken);
+
+			if (!user) {
+				return res.status(404).json({ error: "User not found" });
+			}
+
+			const recipe = await RecipeService.getById(id);
+
+			if (!recipe) {
+				return res.status(404).json({ error: "Recipe not found" });
+			}
+
+			if (recipe.authorId !== userIdFromToken) {
+				return res.status(401).json({ error: "Unauthorized" });
+			}
+
 			const updatedRecipe = await RecipeService.update(
 				id,
 				name,
@@ -121,9 +140,9 @@ export const RecipeController = {
 				description,
 				ingredients,
 				steps,
-				image,
-				authorId
+				image
 			);
+
 			return res.json(updatedRecipe);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });

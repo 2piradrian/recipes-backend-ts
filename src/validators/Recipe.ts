@@ -18,4 +18,23 @@ export const RecipeValidator = {
 
 		next();
 	},
+	update: (req: Request, res: Response, next: NextFunction) => {
+		const { id, name, category, time, description, ingredients, steps, image, authorId } =
+			req.body;
+		if (
+			!name ||
+			!category ||
+			!time ||
+			!description ||
+			!ingredients ||
+			!steps ||
+			!image ||
+			!id ||
+			!authorId
+		) {
+			return res.status(400).json({ error: "Missing fields" });
+		}
+
+		next();
+	},
 };
