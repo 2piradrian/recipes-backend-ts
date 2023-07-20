@@ -66,7 +66,14 @@ export const RecipeService = {
 			take: 3,
 			include: {
 				ingredients: true,
-				author: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
 			},
 		});
 
@@ -83,6 +90,16 @@ export const RecipeService = {
 				},
 			],
 			take: 3,
+			include: {
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
+			},
 		});
 		return recommendedRecipes;
 	},
@@ -108,6 +125,17 @@ export const RecipeService = {
 				steps,
 				image,
 				authorId,
+			},
+			include: {
+				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
 			},
 		});
 		return newRecipe;
@@ -141,7 +169,17 @@ export const RecipeService = {
 				steps,
 				image,
 			},
-			include: { ingredients: true },
+			include: {
+				ingredients: true,
+				author: {
+					select: {
+						id: true,
+						email: true,
+						name: true,
+						image: true,
+					},
+				},
+			},
 		});
 		return updatedRecipe;
 	},

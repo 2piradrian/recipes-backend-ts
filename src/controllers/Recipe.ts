@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { RecipeService } from "../services/Recipe";
 import { Recipe, RequestWithToken } from "../data/types";
 import { UserService } from "../services/User";
-import { Ingredient } from "@prisma/client";
 
 export const RecipeController = {
 	getAll: async (req: Request, res: Response) => {
