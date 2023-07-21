@@ -1,7 +1,7 @@
 import { RequestWithToken } from "../data/types";
 import { Response, NextFunction, Request } from "express";
-import jwt from "jsonwebtoken";
 import { config } from "../data/config";
+import jwt from "jsonwebtoken";
 
 export const AuthValidator = {
 	checkToken: (req: Request, res: Response, next: NextFunction) => {
