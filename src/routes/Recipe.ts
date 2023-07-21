@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AuthValidator } from "../validators/Auth";
+import { AuthValidator } from "../../auth";
 import { RecipeValidator } from "../validators/Recipe";
 import { RecipeController } from "../controllers/Recipe";
 
