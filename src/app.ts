@@ -27,6 +27,9 @@ app.use("/recipes", RecipeRouter);
 app.use("/user", UserRouter);
 
 /* backend in port 3333 */
-app.listen(3333, () => {
+const server = app.listen(3333, () => {
 	console.log("Server is running");
 });
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
