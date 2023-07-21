@@ -1,6 +1,6 @@
-import { RequestWithToken } from "./src/data/types";
+import { RequestWithToken } from "../data/types";
 import { Response, NextFunction, Request } from "express";
-import { config } from "./src/data/config";
+import { config } from "../data/config";
 import jwt from "jsonwebtoken";
 
 export const AuthValidator = {
