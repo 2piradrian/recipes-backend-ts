@@ -7,10 +7,10 @@ export const RecipeRouter = Router();
 
 RecipeRouter.get("/", RecipeController.getAll);
 RecipeRouter.get("/:id", RecipeController.getById);
-RecipeRouter.get("/page", RecipeController.getPage);
 RecipeRouter.get("/user-recipes/:id", RecipeController.getUserRecipes);
 RecipeRouter.get("/home/lastest", RecipeController.getLatest);
 
+RecipeRouter.post("/page", RecipeController.getPage);
 RecipeRouter.post("/liked", AuthValidator.checkToken, RecipeController.getLiked);
 RecipeRouter.post("/home/recommended", AuthValidator.checkToken, RecipeController.getRecommended);
 

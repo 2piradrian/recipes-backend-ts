@@ -23,8 +23,12 @@ export const RecipeController = {
 	},
 	getPage: async (req: Request, res: Response) => {
 		try {
-			const { page, pageSize } = req.query;
-			const recipes = await RecipeService.getPage(Number(page), Number(pageSize));
+			const { page, pageSize, category } = req.body;
+			const recipes = await RecipeService.getPage(
+				Number(page),
+				Number(pageSize),
+				category as string
+			);
 			return res.json(recipes);
 		} catch (error: any) {
 			return res.status(500).json({ error: error.message });

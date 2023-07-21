@@ -1,4 +1,4 @@
-import { Ingredient, PrismaClient } from "@prisma/client";
+import { Ingredient, PrismaClient, Recipe } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -38,22 +38,48 @@ export const RecipeService = {
 		});
 		return recipe;
 	},
-	getPage: async (page: number, pageSize: number) => {
-		const recipes = await prisma.recipe.findMany({
-			skip: (page - 1) * pageSize,
-			take: pageSize,
-			include: {
-				ingredients: true,
-				author: {
-					select: {
-						id: true,
-						email: true,
-						name: true,
-						image: true,
+	getPage: async (page: number, pageSize: number, category?: string) => {
+		let recipes: Recipe[];
+
+		if (category) {
+			// Si se proporciona una categoría, filtrar las recetas por esa categoría
+			recipes = await prisma.recipe.findMany({
+				where: {
+					category,
+				},
+				skip: (page - 1) * pageSize,
+				take: pageSize,
+				include: {
+					ingredients: true,
+					author: {
+						select: {
+							id: true,
+							email: true,
+							name: true,
+							image: true,
+						},
 					},
 				},
-			},
-		});
+			});
+		} else {
+			// Si no se proporciona una categoría, obtener todas las recetas
+			recipes = await prisma.recipe.findMany({
+				skip: (page - 1) * pageSize,
+				take: pageSize,
+				include: {
+					ingredients: true,
+					author: {
+						select: {
+							id: true,
+							email: true,
+							name: true,
+							image: true,
+						},
+					},
+				},
+			});
+		}
+
 		return recipes;
 	},
 	getLatest: async () => {
