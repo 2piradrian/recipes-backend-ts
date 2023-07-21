@@ -5,15 +5,13 @@
 	"main": "app.js",
 	"scripts": {
 		"dev": "nodemon src/app.ts",
-		"start": "npm run build && node dist/app.js",
-		"build": "npm install && prisma generate",
-		"deploy": "npm run build && node build/app.js"
+		"build": "tsc",
+		"start": "node build/app.js"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"@prisma/client": "^5.0.0",
-		"@types/jsonwebtoken": "^9.0.2",
 		"bcrypt": "^5.1.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
@@ -29,6 +27,8 @@
 		"@types/cors": "^2.8.13",
 		"@types/dotenv": "^8.2.0",
 		"@types/express": "^4.17.17",
-		"prisma": "^5.0.0"
+		"@types/jsonwebtoken": "^9.0.2",
+		"prisma": "^5.0.0",
+		"typescript": "^5.1.6"
 	}
 }
