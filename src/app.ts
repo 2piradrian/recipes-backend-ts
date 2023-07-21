@@ -12,11 +12,15 @@ if (!config().port || !config().accessToken || !config().refreshToken) {
 	throw new Error("Missing environment variables");
 }
 
-/* middleware */
 app.use(express.json());
 
-/* frontend in port 3000 */
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(
+	cors({
+		origin: true, // Allow requests from any origin
+		credentials: true, // Allow credentials (cookies, HTTP authentication) to be included in requests
+		exposedHeaders: ["Authorization"], // Expose the Authorization header to the frontend
+	})
+);
 
 app.use("/auth", AuthRouter);
 app.use("/recipes", RecipeRouter);
