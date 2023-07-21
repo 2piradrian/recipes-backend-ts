@@ -1,5 +1,4 @@
 const getAcessToken = (): string => {
-	console.log(process.env.ACCESS_TOKEN);
 	if (process.env.ACCESS_TOKEN) {
 		return process.env.ACCESS_TOKEN;
 	}
