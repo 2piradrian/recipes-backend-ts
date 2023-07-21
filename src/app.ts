@@ -26,8 +26,7 @@ app.use("/auth", AuthRouter);
 app.use("/recipes", RecipeRouter);
 app.use("/user", UserRouter);
 
-/* backend in port 3333 */
-const server = app.listen(3333, () => {
+const server = app.listen(3001, () => {
 	console.log("Server is running");
 });
 
