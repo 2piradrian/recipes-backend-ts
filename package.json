@@ -2,7 +2,7 @@
 	"name": "recipes-backend-ts",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "app.js",
 	"scripts": {
 		"dev": "nodemon src/app.ts",
 		"start": "npm run build && node dist/app.js",
@@ -20,6 +20,9 @@
 		"express": "^4.18.2",
 		"express-validator": "^7.0.1",
 		"jsonwebtoken": "^9.0.0"
+	},
+	"engines": {
+		"node": ">=14"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",
