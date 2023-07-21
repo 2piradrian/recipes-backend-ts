@@ -1,7 +1,7 @@
-import { AuthValidator } from "./../validators/Auth";
-import { RecipeValidator } from "../validators/Recipe";
-import { RecipeController } from "./../controllers/Recipe";
 import { Router } from "express";
+import { AuthValidator } from "../validators/Auth";
+import { RecipeValidator } from "../validators/Recipe";
+import { RecipeController } from "../controllers/Recipe";
 
 export const RecipeRouter = Router();
 
