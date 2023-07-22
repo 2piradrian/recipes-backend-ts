@@ -55,7 +55,6 @@ export const RecipeController = {
 
 			const likedRecipes: Recipe[] = [];
 
-			// Utilizar Promise.all para esperar a que se resuelvan todas las promesas
 			await Promise.all(
 				user.favourites.map(async (recipe) => {
 					const likedRecipe = await RecipeService.getById(recipe);
