@@ -32,7 +32,7 @@ export const AuthValidator = {
 	register(req: Request, res: Response, next: NextFunction) {
 		const { name, email, password, image } = req.body;
 
-		if (!name || !email || !password || !image) {
+		if (!name || !email || !password) {
 			return res.status(400).json({ message: "All fields are required" });
 		}
 		if (password.length < 6) {
